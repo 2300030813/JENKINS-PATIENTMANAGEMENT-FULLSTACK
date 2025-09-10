@@ -1,0 +1,22 @@
+@Id
+@GeneratedValue(strategy = GenerationType.IDENTITY)
+@Column(name = "patient_id")
+private int id;
+
+@Column(name = "patient_name", nullable = false, length = 50)
+private String name;
+
+@Column(name = "patient_age", nullable = false)
+private int age;
+
+@Column(name = "patient_gender", length = 10) // make nullable
+private String gender;
+
+@Column(name = "patient_disease", length = 100)
+private String disease;
+
+@Column(name = "patient_email", unique = true, length = 50)
+private String email;
+
+@Column(name = "patient_contact", unique = true, length = 20)
+private String contact;
