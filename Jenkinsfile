@@ -27,30 +27,29 @@ pipeline {
         }
 
         // ===== BACKEND BUILD =====
-        stage('Build Backend') {
-            steps {
-                dir('BACKEND/PATIENTAPI-SPRINGBOOT') {
-                    bat 'mvn clean package'
-                }
-            }
+stage('Build Backend') {
+    steps {
+        dir('BACKEND/PATIENTAPI-SPRINGBOOT') {
+            bat 'mvn clean package -DskipTests'
         }
-
-        // ===== BACKEND DEPLOY =====
-        stage('Deploy Backend to Tomcat') {
-            steps {
-                bat '''
-                if exist "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\springbootpatientapi.war" (
-                    del /Q "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\springbootpatientapi.war"
-                )
-                if exist "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\springbootpatientapi" (
-                    rmdir /S /Q "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\springbootpatientapi"
-                )
-                copy "BACKEND\\PATIENTAPI-SPRINGBOOT\\target\\*.war" "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\springbootpatientapi.war"
-                '''
-            }
-        }
-
     }
+}
+
+// ===== BACKEND DEPLOY =====
+stage('Deploy Backend to Tomcat') {
+    steps {
+        bat '''
+        if exist "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\springbootpatientapi.war" (
+            del /Q "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\springbootpatientapi.war"
+        )
+        if exist "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\springbootpatientapi" (
+            rmdir /S /Q "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\springbootpatientapi"
+        )
+        copy "BACKEND\\PATIENTAPI-SPRINGBOOT\\target\\springbootpatientapi.war" "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\springbootpatientapi.war"
+        '''
+    }
+}
+
 
     post {
         success {
