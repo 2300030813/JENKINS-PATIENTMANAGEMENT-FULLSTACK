@@ -129,3 +129,4 @@
 2025-09-11 09:43:15,173 [Worker-26: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
 2025-09-11 09:43:15,180 [Worker-26: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 0 resource from src\main\resources to target\classes
 2025-09-11 09:43:15,184 [Worker-26: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\3-1\JENKINS-PRACTICE\BACKEND\PATIENTAPI-SPRINGBOOT\src\test\resources
+2025-09-12 10:28:39,990 [Worker-4: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is out-of-date. Trying to update.
