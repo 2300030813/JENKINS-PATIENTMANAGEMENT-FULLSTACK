@@ -2,11 +2,10 @@ pipeline {
     agent any
 
     stages {
-
         // ===== FRONTEND BUILD =====
         stage('Build Frontend') {
             steps {
-                dir('FRONTEND/PATIENTAPI-REACT') {
+                dir('PATIENTAPI-REACT') {
                     bat 'npm install'
                     bat 'npm run build'
                 }
@@ -21,7 +20,7 @@ pipeline {
                     rmdir /S /Q "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\reactpatientapi"
                 )
                 mkdir "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\reactpatientapi"
-                xcopy /E /I /Y FRONTEND\\PATIENTAPI-REACT\\dist\\* "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\reactpatientapi"
+                xcopy /E /I /Y PATIENTAPI-REACT\\dist\\* "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\reactpatientapi"
                 '''
             }
         }
@@ -29,7 +28,7 @@ pipeline {
         // ===== BACKEND BUILD =====
         stage('Build Backend') {
             steps {
-                dir('BACKEND/PATIENTAPI-SPRINGBOOT') {
+                dir('PATIENTAPI-SPRINGBOOT') {
                     bat 'mvn clean package'
                 }
             }
@@ -45,11 +44,13 @@ pipeline {
                 if exist "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\springbootpatientapi" (
                     rmdir /S /Q "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\springbootpatientapi"
                 )
-                copy "BACKEND\\PATIENTAPI-SPRINGBOOT\\target\\*.war" "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\springbootpatientapi.war"
+                copy "PATIENTAPI-SPRINGBOOT\\target\\springbootpatientapi.war" "C:\\Program Files\\Apache Software Foundation\\Tomcat 10.1\\webapps\\"
+
+                net stop Tomcat10
+                net start Tomcat10
                 '''
             }
         }
-
     }
 
     post {
