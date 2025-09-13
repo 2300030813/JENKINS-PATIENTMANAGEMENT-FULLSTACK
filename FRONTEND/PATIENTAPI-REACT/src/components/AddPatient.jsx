@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import config from "../config";
+import API_URL from "../config";   // import directly
 
 const AddPatient = ({ addPatientToList, editPatient, setEditPatient }) => {
   const [patient, setPatient] = useState({
@@ -31,13 +31,13 @@ const AddPatient = ({ addPatientToList, editPatient, setEditPatient }) => {
 
     try {
       const url = editPatient
-        ? `${config.API_URL}/update`
-        : `${config.API_URL}/add`;
+        ? `${API_URL}/update`
+        : `${API_URL}/add`;
 
       const method = editPatient ? "PUT" : "POST";
 
       const response = await fetch(url, {
-        method: method,
+        method,
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           id: parseInt(patient.id),
@@ -53,14 +53,8 @@ const AddPatient = ({ addPatientToList, editPatient, setEditPatient }) => {
       const data = await response.json();
 
       if (response.ok) {
-        addPatientToList(data); // Update App state
-        setMessage(
-          editPatient
-            ? "Patient updated successfully!"
-            : "Patient added successfully!"
-        );
-
-        // Reset form
+        addPatientToList(data);
+        setMessage(editPatient ? "Patient updated successfully!" : "Patient added successfully!");
         setPatient({
           id: "",
           name: "",
@@ -70,8 +64,6 @@ const AddPatient = ({ addPatientToList, editPatient, setEditPatient }) => {
           email: "",
           contact: ""
         });
-
-        // Exit edit mode
         if (editPatient) setEditPatient(null);
       } else {
         setMessage(`Error: ${data}`);
@@ -92,50 +84,14 @@ const AddPatient = ({ addPatientToList, editPatient, setEditPatient }) => {
           placeholder="Patient ID"
           value={patient.id}
           onChange={handleChange}
-          disabled={editPatient ? true : false} // Disable ID editing in edit mode
+          disabled={editPatient ? true : false}
         />
-        <input
-          type="text"
-          name="name"
-          placeholder="Name"
-          value={patient.name}
-          onChange={handleChange}
-        />
-        <input
-          type="number"
-          name="age"
-          placeholder="Age"
-          value={patient.age}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="gender"
-          placeholder="Gender"
-          value={patient.gender}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="disease"
-          placeholder="Disease"
-          value={patient.disease}
-          onChange={handleChange}
-        />
-        <input
-          type="email"
-          name="email"
-          placeholder="Email"
-          value={patient.email}
-          onChange={handleChange}
-        />
-        <input
-          type="text"
-          name="contact"
-          placeholder="Contact"
-          value={patient.contact}
-          onChange={handleChange}
-        />
+        <input type="text" name="name" placeholder="Name" value={patient.name} onChange={handleChange} />
+        <input type="number" name="age" placeholder="Age" value={patient.age} onChange={handleChange} />
+        <input type="text" name="gender" placeholder="Gender" value={patient.gender} onChange={handleChange} />
+        <input type="text" name="disease" placeholder="Disease" value={patient.disease} onChange={handleChange} />
+        <input type="email" name="email" placeholder="Email" value={patient.email} onChange={handleChange} />
+        <input type="text" name="contact" placeholder="Contact" value={patient.contact} onChange={handleChange} />
         <button type="submit">{editPatient ? "Update Patient" : "Add Patient"}</button>
       </form>
       {message && <p>{message}</p>}

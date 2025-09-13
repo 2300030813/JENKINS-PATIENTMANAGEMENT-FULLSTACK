@@ -12,7 +12,7 @@ import com.klef.service.PatientService;
 
 @RestController
 @RequestMapping("/patientapi")
-@CrossOrigin(origins = "http://localhost:5173")
+@CrossOrigin(origins = "*")
 public class PatientController {
 
     @Autowired
