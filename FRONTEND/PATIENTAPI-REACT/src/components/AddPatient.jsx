@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
-import API_URL from "../config";   // import directly
+import config from "../config";     // ✅ import the whole config object
+const { API_URL } = config;         // ✅ destructure to get API_URL
+
 
 const AddPatient = ({ addPatientToList, editPatient, setEditPatient }) => {
   const [patient, setPatient] = useState({
