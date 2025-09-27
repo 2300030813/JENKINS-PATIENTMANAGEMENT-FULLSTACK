@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import AddPatient from "./components/AddPatient";
 import PatientList from "./components/PatientList";
 import "./App.css";
+import { config } from "./config.js";
 
 function App() {
   const [patients, setPatients] = useState([]);
@@ -11,7 +12,7 @@ function App() {
   useEffect(() => {
     const fetchPatients = async () => {
       try {
-        const res = await fetch("http://localhost:2030/springbootpatientapi/patientapi/all");
+        const res = await fetch(`${config.API_URL}/all`);
         const data = await res.json();
         setPatients(data);
       } catch (err) {
@@ -35,7 +36,7 @@ function App() {
   // Delete patient via backend
   const handleDelete = async (id) => {
     try {
-      const res = await fetch("http://localhost:2030/springbootpatientapi/patientapi/delete/${id}", {
+      const res = await fetch(`${config.API_URL}/delete/${id}`, {
         method: "DELETE",
       });
       if (res.ok) {
