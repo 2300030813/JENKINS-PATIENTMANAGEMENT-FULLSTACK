@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import AddPatient from "./components/AddPatient";
 import PatientList from "./components/PatientList";
 import "./App.css";
-import { config } from "./config.js";
+import  config  from "./config.js";
 
 function App() {
   const [patients, setPatients] = useState([]);
