@@ -11,7 +11,7 @@ function App() {
   useEffect(() => {
     const fetchPatients = async () => {
       try {
-        const res = await fetch("http://localhost:2010/patientapi/all");
+        const res = await fetch("http://localhost:2030/patientapi/all");
         const data = await res.json();
         setPatients(data);
       } catch (err) {
@@ -35,7 +35,7 @@ function App() {
   // Delete patient via backend
   const handleDelete = async (id) => {
     try {
-      const res = await fetch(`http://localhost:2010/patientapi/delete/${id}`, {
+      const res = await fetch(`http://localhost:2030/patientapi/delete/${id}`, {
         method: "DELETE",
       });
       if (res.ok) {
